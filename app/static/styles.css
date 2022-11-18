@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Podkova:wght@400;500;600;700;800&display=swap');
+
+body {
+    font-family: 'Podkova', serif !important;
+    background-color: antiquewhite !important;
+}
+
+p {
+    font-weight: normal;
+    font-family: 'Podkova', serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: bold !important;
+    font-family: 'Cormorant', serif;
+}
+h4, h5, h6 {
+    font-style: italic;
+}
+
+.default-button {
+    background: #6b3021;
+    border-style: none;
+    transform: skew(-4deg);
+    filter: invert(100%);
+}

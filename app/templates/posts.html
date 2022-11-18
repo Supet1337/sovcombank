@@ -1,0 +1,43 @@
+{% extends "base/base.html" %}
+
+{% block content %}
+  <div class="container py-4 py-xl-5">
+
+    {% if is_admin %}
+      <div class="row">
+        <h3> Создать новый пост </h3>
+        <form class="row mb-5" method="post">
+            <div class="col-12">
+                <label for="titlePost" class="form-label">Заголовок</label>
+                <input type="text" name="title" class="form-control" id="titlePost" placeholder="Великолепно покакал">
+            </div>
+            <div class="col-12">
+                <label for="inputImagePath" class="form-label">Ссылка на изображение</label>
+                <input type="text" name="image_path" class="form-control" id="inputImagePath" placeholder="https://imgur.com">
+            </div>
+            <div class="col-12">
+                <label for="contentPost" class="form-label">Содержимое поста</label>
+                <textarea type="text" name="content" class="form-control" id="contentPost" rows="3" placeholder="Расхуярь меня здесь..."></textarea>
+            </div>
+            <div class="col-12 pt-3 align-content-end">
+                <button type="submit" class="btn btn-primary default-button">Создать</button>
+            </div>
+        </form>
+
+      </div>
+    {% endif %}
+
+    <div class="row">
+      {% for post in posts %}
+        <h3> {{ post.title }} </h3>
+        <h6 style="font-style: italic; color: darkgray; font-family: 'Podkova', serif"> {{ post.date }} </h6>
+        {% if post.image_path %}
+          <img class="rounded img-fluid d-block" style="max-height: 600px;" src="{{ post.image_path }}"  alt="Post's image"/>
+        {% endif %}
+
+        <p> {{ post.content }} </p>
+
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
