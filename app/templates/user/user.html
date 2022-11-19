@@ -51,7 +51,7 @@
                   {% for account in accounts %}
                 <li>
                     <div onclick="choosebill(this.innerHTML)" class="dropdown-item">
-                    Валютный счёт #{{ account.id }} ({{ account.currency }})
+                        <a href="/account/{{account.id}}">Валютный счёт #{{ account.id }} ({{ account.currency }})</a>
                     </div>
                 </li>
                   {% endfor %}
@@ -135,7 +135,7 @@
                 <div class="card-body">
                      <div>
                         <canvas id="myChart"></canvas>
-                         <button onclick="setIntervalweek()" class="btn" >7 дней</button>
+                         <button onclick="setIntervalweek()" class="btn" >Неделя</button>
                          <button onclick="setIntervalmonth()" class="btn" >Месяц</button>
                          <button onclick="setIntervalyear()" class="btn" >Год</button>
                     </div>
@@ -161,7 +161,7 @@
 
 
             <form action="/account/create" id="new-bill-form" method="post">
-                <select id="new-bill-val" class="valuechange form-select " aria-label="Default select example">
+                <select name="new_bill_val" id="new-bill-val" class="valuechange form-select " aria-label="Default select example">
                      <option selected>Выберите валюту счёта</option>
                      {% for key, description in currency_dict.items() %}
                      <option value="{{ key }}">{{ description }}</option>

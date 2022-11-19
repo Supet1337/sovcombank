@@ -1,15 +1,14 @@
 import httpx
 import starlette.status
 
-from app.main import app, templates
-from app.schemas import AccountData
-from app.utility import JAVA_BACK_URL, check_auth
+from app.main import app
+from app.utility import JAVA_BACK_URL, check_auth, CurrencyEnum
 
-from fastapi import Request, Cookie
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi import Request, Cookie, Form
+from fastapi.responses import RedirectResponse
 
 
-@app.get("/account/{account_id}", response_class=HTMLResponse)
+@app.get("/account/{account_id}")
 async def account_page(request: Request, account_id: int, vtauth: str | None = Cookie(default=None)):
     errors = []
     s_email = check_auth(vtauth)
@@ -22,20 +21,24 @@ async def account_page(request: Request, account_id: int, vtauth: str | None = C
     if check.status_code == 403: return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
     elif check.status_code == 404: return RedirectResponse("/404", status_code=starlette.status.HTTP_302_FOUND)
     elif check.status_code == 200:
-        account = AccountData(**check.json())
-        # TODO: get data for charts through currency key
-        return templates.TemplateResponse("user/user.html",
-                                          {
-                                              "request": request,
-                                              "errors": errors,
-                                              "account": account
-                                          })
+        response = RedirectResponse(f"/user?id={account_id}",
+                                    status_code=starlette.status.HTTP_302_FOUND)
+
+        return response
 
 
 @app.post("/account/create")
-async def create_account(request: Request, ):
+async def create_account(request: Request, vtauth: str | None = Cookie(default=None),
+                         new_bill_val: CurrencyEnum = Form(default=CurrencyEnum.Usd)
+                         ):
     errors = []
-    # validate data
+    s_email = check_auth(vtauth)
+    if s_email is None: return RedirectResponse("/login?q=notauthorized", status_code=starlette.status.HTTP_302_FOUND)
+
+    check = httpx.post(JAVA_BACK_URL + "/accounts/create", json={
+        "currency": new_bill_val,
+        "email": s_email
+    })
 
     return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
 

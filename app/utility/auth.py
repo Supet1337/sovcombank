@@ -54,8 +54,9 @@ def update_sessions(request: Request, email: str, is_admin: bool = False) -> dic
 def check_auth(cookie_token: str | None) -> str | None:
     from app.main import sessions
     if cookie_token is not None:
-        email = sessions.check_session(cookie_token).get("email")
-        return email
+        session = sessions.check_session(cookie_token)
+        if session is None: return None
+        else: return session.get("email")
     else:
         return None
 
