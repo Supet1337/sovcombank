@@ -1,8 +1,9 @@
 import hashlib
-
 import httpx
 
-from . import JAVA_BACK_URL, SECRET_KEY
+from fastapi import Request
+
+from . import JAVA_BACK_URL, SECRET_KEY, COOKIE_TOKEN_KEY
 from app.schemas import UserData
 
 
@@ -33,3 +34,17 @@ def check_user(email: str) -> UserData | None:
     req = httpx.post(JAVA_BACK_URL, json={"email": email})
     if req.status_code == 200: UserData(**req.json())
     elif req.status_code == 404: return None
+
+
+def update_sessions(request: Request, email: str, is_admin: bool = False) -> dict:
+    client_ip = request.client.host
+    token = gen_token(client_ip, email)
+
+    from app.main import sessions
+    sessions.add_session(token, email, client_ip, is_admin)
+    return {
+        "key": COOKIE_TOKEN_KEY,
+        "value": token,
+        "httponly": True,
+        "max_age": 60 * 60
+    }

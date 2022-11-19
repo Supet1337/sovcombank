@@ -1,7 +1,7 @@
 import starlette.status
 
-from app.main import app, templates, sessions
-from app.utility import gen_token, hash_password, JAVA_BACK_URL, COOKIE_TOKEN_KEY
+from app.main import app, templates
+from app.utility import hash_password, JAVA_BACK_URL, update_sessions
 
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import Request, Form
@@ -34,7 +34,7 @@ async def login(
 ):
     hashed_password: str = hash_password(password)
 
-    check = httpx.post(JAVA_BACK_URL, json={
+    check = httpx.post(JAVA_BACK_URL + "/login", json={
         "email": email,
         "password": hashed_password
     })
@@ -77,9 +77,9 @@ async def register(
 
     hashed_password = hash_password(password)
 
-    check = httpx.post(JAVA_BACK_URL, json={
+    check = httpx.post(JAVA_BACK_URL + "/registration", json={
         "email": email,
-        "fullname": fullname,
+        "name": fullname,
         "password": hashed_password
     })
 
@@ -95,15 +95,5 @@ async def register(
         return response
 
 
-def update_sessions(request: Request, email: str, is_admin: bool = False) -> dict:
-    client_ip = request.client.host
-    token = gen_token(client_ip, email)
-    sessions.add_session(token, email, client_ip, is_admin)
-    return {
-        "key": COOKIE_TOKEN_KEY,
-        "value": token,
-        "httponly": True,
-        "max_age": 60 * 60
-    }
 
 

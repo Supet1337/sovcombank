@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from app.utility import *
+from app.utility import STATIC_FILES_PATH, TEMPLATES_PATH, SessionsContainer
 
 templates = Jinja2Templates(directory=TEMPLATES_PATH)
 
