@@ -9,9 +9,10 @@ from app.utility import COOKIE_TOKEN_KEY
 @app.get("/user", response_class=HTMLResponse)
 async def user(request: Request, vtauth: str | None = Cookie(default=None)):
     if vtauth is None:
-        return RedirectResponse("/login")
+        return RedirectResponse("/login?q=notauthorized")
 
     return templates.TemplateResponse("user/user.html",
                                       {
-                                          "request": request
+                                          "request": request,
+                                          "sessions": sessions
                                       })
