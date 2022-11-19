@@ -65,7 +65,7 @@ async def register(request: Request):
 @app.post("/register")
 async def register(
         request: Request,
-        email: str = Form(), fullname: str = Form(), password: str = Form(), confirm_password: str = Form()
+        first_name: str = Form(), second_name: str = Form(), email: str = Form(), password: str = Form(), confirm_password: str = Form()
 ):
     # Validate data
     if not password == confirm_password:
@@ -79,7 +79,7 @@ async def register(
 
     check = httpx.post(JAVA_BACK_URL + "/registration", json={
         "email": email,
-        "name": fullname,
+        "name": " ".join([first_name, second_name]),
         "password": hashed_password
     })
 

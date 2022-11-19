@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+html{
+    height: 100%;
+}
+
+body {
+    /* background-color: #37393d; */
+    background-color: #white;
+    font-family: "Montserrat";
+    font-weight: 300;
+    font-size: 16px;
+    color: #555;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Montserrat";
+    font-weight: 300;
+    color: #333;
+}
+
+p {
+    line-height: 28px;
+    margin-bottom: 25px;
+}
+.centered {
+    text-align: center;
+}
+
+a {
+    color: #333 !important;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    color: #7b7b7b;
+    text-decoration: none;
+    outline: 0;
+}
+
+.background-card{
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    background-size: cover;
+}
+
+.brd-n{
+    border: none;
+}
+
+.text-b{
+    font-weight: bold;
+}
+
+.avatar {
+    border-radius: 50%;
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #35A8C9;
+    --bs-btn-border-color: none;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #014B60;
+    --bs-btn-hover-border-color: #014B60;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #014B60;
+    --bs-btn-active-border-color: #014B60;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #014B60;
+    --bs-btn-disabled-border-color: #014B60;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: #35A8C9;
+}

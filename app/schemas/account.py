@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class AccountData(BaseModel):
-    number: int
+    id: int
     currency_key: str
     balance: float
 

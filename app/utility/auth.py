@@ -1,3 +1,4 @@
+import functools
 import hashlib
 import httpx
 
@@ -48,3 +49,20 @@ def update_sessions(request: Request, email: str, is_admin: bool = False) -> dic
         "httponly": True,
         "max_age": 60 * 60
     }
+
+
+def check_auth(cookie_token: str | None) -> str | None:
+    from app.main import sessions
+    if cookie_token is not None:
+        email = sessions.check_session(cookie_token)
+        return email
+    else:
+        return None
+
+
+def are_null_strings(*args: list[str]) -> bool:
+    for string in args:
+        if string == "" or string is None:
+            return False
+    else:
+        return True

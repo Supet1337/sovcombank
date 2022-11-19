@@ -32,7 +32,7 @@ async def admin_login(
 
     errors = []
     hashed_password = hash_password(password)
-    check = httpx.post(JAVA_BACK_URL, json={
+    check = httpx.post(JAVA_BACK_URL + "/admins/login", json={
         "email": email,
         "password": hashed_password
     })
@@ -70,7 +70,7 @@ async def admin_register(request: Request,
 
     hashed_password = hash_password(password)
 
-    check = httpx.post(JAVA_BACK_URL, json={
+    check = httpx.post(JAVA_BACK_URL + "/admins/registration", json={
         "email": email,
         "name": name,
         "password": hashed_password,
