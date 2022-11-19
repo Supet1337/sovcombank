@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base.html" %}
 {% block content %}
 <div class="container py-4 py-xl-5">
     <div class="row mb-3 text-center">
@@ -8,7 +8,10 @@
     <div class="row mb-5">
         <br>
         <p>
-            <b>Доброго времени суток!</b>
+            <b>Доброго времени суток!</b>}
+        </p>
+        <p>
+            {{ request.headers }}
         </p>
         <p>
             Я, так сказать, <i>боец-универсал</i>. Работаю с несколькими стеками, такими как:

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  LOGIN
+<form method="post">
+  <label for="emailInput">Email</label>
+    <input type="email" name="email" id="emailInput" placeholder="email">
+    <label for="passwordInput"> Password</label>
+    <input type="password" name="password" id="passwordInput" placeholder="password">
+  <button type="submit">login</button>
+</form>
+{{ sessions.__sessions }}
+{% endblock %}
