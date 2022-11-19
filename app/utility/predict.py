@@ -2,6 +2,8 @@ import requests
 import pandas as pd
 from statsmodels.tsa.arima.model import ARIMA
 
+from app.utility import EXCHANGE_APP_ID
+
 
 def forecast(start_date: str, end_date: str, currency: str):
     """
@@ -16,7 +18,7 @@ def forecast(start_date: str, end_date: str, currency: str):
 
     url = f'https://api.apilayer.com/fixer/timeseries?start_date={start_date}&end_date={end_date}&base={base}&symbols={symbols}'
     payload = {}
-    headers = {"apikey": "bNpxciduvfYcvmP4dqyrSXPGQZwDpCkU"}
+    headers = {"apikey": EXCHANGE_APP_ID}
 
     response = requests.request("GET", url, headers=headers, data=payload)
     data = response.json()

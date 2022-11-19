@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    body {
+        background: #35A8C9;
+    }
+</style>
 <div class="container-fluid">
     <div class="row flex-nowrap">
         <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
@@ -14,23 +19,13 @@
                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-white">На главную</span>
                         </a>
                     </li>
-<!--                    <li class="nav-item">-->
-<!--                        <a href="#" class="nav-link align-middle px-0">-->
-<!--                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-white">Ввод\Вывод средств</span>-->
-<!--                        </a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item">-->
-<!--                        <a href="#" class="nav-link align-middle px-0">-->
-<!--                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-white">Настройки</span>-->
-<!--                        </a>-->
-<!--                    </li>-->
                     <li class="nav-item">
                         <a href="#" class="nav-link align-middle px-0">
                             <i class="fs-4 bi-house"></i> <button data-bs-toggle="modal" data-bs-target="#buy" class="btn btn-primary ms-1 d-none d-sm-inline text-white">Купить валюту</button>
                         </a>
                     </li>
 
-                    <li class="nav-item">
+                     <li class="nav-item">
                         <a href="#" class="nav-link align-middle px-0">
                             <i class="fs-4 bi-house"></i> <button data-bs-toggle="modal" data-bs-target="#newBill" type="submit" style="background-color: #00E797; color: white;" class="btn  ms-1 d-none d-sm-inline text-white">Открыть новый счёт</button>
                         </a>
@@ -67,6 +62,7 @@
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                         Валютный счёт</div>
                                     <div id="bill" class="h5 mb-0 font-weight-bold text-gray-800">Валютный счёт #{{ current_account.id }} ({{current_account.currency}})</div>
+                                    <a style="color: #35A8C9 !important;" class="text-b" href="/operations/acc{{ current_account.id }}" >История операций</a>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -82,7 +78,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                         Доход</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$4</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">RUB {{ profit or 0 }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -99,7 +95,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
                                         Траты</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">$1</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">RUB {{ deficit or 0 }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -114,11 +110,11 @@
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Всего операций
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Баланс
                                     </div>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col-auto">
-                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">1</div>
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ current_account.balance }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -190,24 +186,18 @@
 
 
 
-            <form action="" id="buy-form" method="post">
+            <form action="/deal" id="buy-form" method="post">
 
-                <div id="billbye" class="mb-4 text-b">Валютный счёт #111 ($)</div>
+                <div id="billbye" class="mb-4 text-b">Валютный счёт #{{ current_account.id }} ({{ current_account.currency }})</div>
 
-                 <select id="select-val" class="valuechange form-select mb-4 ">
-                     <option selected>Выберите валюту</option>
-                     {% for key, description in currency_dict.items() %}
-                     <option value="{{ key }}">{{ description }}</option>
-                     {% endfor %}
-                </select>
-
-                <select id="operation" class="valuechange form-select mb-4 ">
+                <select id="operation" name="operation" class="valuechange form-select mb-4 ">
                     <option selected>Выберите операцию</option>
-                     <option value="Покупка">Покупка</option>
-                     <option value="Продажа">Продажа </option>
+                     <option value="buy">Покупка</option>
+                     <option value="sell">Продажа </option>
                 </select>
-
-                <input type="number" required class="valuechange form-control mb-4" id="inputCount1" placeholder="Количество">
+                <input hidden name="account_id" value="{{current_account.id}}">
+                <input hidden name="currency_key" value="{{ current_account.currency }}">
+                <input name="number" type="number" required class="valuechange form-control mb-4" id="inputCount1" placeholder="Количество">
                 <div class="result text-b" id="selection"></div>
             </form>
       </div>
@@ -221,16 +211,8 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-
-
-
-
 
 var selectElement = document.getElementById("select-val");
 var countVal = document.getElementById("inputCount1");
@@ -279,7 +261,6 @@ const ctx = document.getElementById('myChart');
         myChart.data.labels = [];
         myChart.data.datasets[0].data = {{ currencies.month }};
         for (var i = 0; i < 32; i++) {
-            // myChart.data.datasets[0].data[i] = "{{ currencies.month.pop() }}";
             myChart.data.labels.push(i);
             myChart.update();
         }
@@ -288,7 +269,6 @@ const ctx = document.getElementById('myChart');
         myChart.data.labels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
         myChart.data.datasets[0].data = {{ currencies.week }};
         for (var i = 0; i < 8; i++) {
-            // myChart.data.datasets[0].data[i] = "{{ currencies.week.pop() }}";
             myChart.update();
         }
     }
@@ -297,7 +277,6 @@ const ctx = document.getElementById('myChart');
         myChart.data.labels = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Нояб', 'Дек'];
         myChart.data.datasets[0].data = {{ currencies.year }};
         for (var i = 0; i < 13; i++) {
-            // myChart.data.datasets[0].data[i] = "{{ currencies.year }}";
             myChart.update();
         }
     }

@@ -1,3 +1,5 @@
+import starlette.status
+
 from app.main import app, templates
 
 from fastapi.responses import RedirectResponse
@@ -10,7 +12,7 @@ from fastapi import Request
 @app.exception_handler(StarletteHTTPException)
 async def redirect_error(request: Request, exception: StarletteHTTPException):
     if exception.status_code == 404:
-        return RedirectResponse("/404")
+        return RedirectResponse("/404", starlette.status.HTTP_302_FOUND)
 
 
 @app.get("/404", response_class=HTMLResponse)
@@ -20,3 +22,10 @@ async def handler_404(request: Request):
         "request": request
     })
 
+
+@app.get("/402", response_class=HTMLResponse)
+async def handler_402(request: Request):
+    return templates.TemplateResponse("errors/402.html",
+                                      {
+                                          "request": request
+                                      })

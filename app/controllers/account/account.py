@@ -2,7 +2,8 @@ import httpx
 import starlette.status
 
 from app.main import app
-from app.utility import JAVA_BACK_URL, check_auth, CurrencyEnum
+from app.schemas.enums import CurrencyEnum
+from app.utility import JAVA_BACK_URL, check_auth
 
 from fastapi import Request, Cookie, Form
 from fastapi.responses import RedirectResponse
@@ -39,6 +40,5 @@ async def create_account(request: Request, vtauth: str | None = Cookie(default=N
         "currency": new_bill_val,
         "email": s_email
     })
-
-    return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
+    if check.status_code == 200: return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
 

@@ -83,3 +83,17 @@ a:hover, a:focus {
 .dropdown-menu {
     --bs-dropdown-link-active-bg: #35A8C9;
 }
+
+.results tr[visible='false'],
+.no-result{
+  display:none;
+}
+
+.results tr[visible='true']{
+  display:table-row;
+}
+
+.counter{
+  padding:8px;
+  color:#ccc;
+}
