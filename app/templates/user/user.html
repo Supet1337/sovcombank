@@ -20,6 +20,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link align-middle px-0" href="#">
+                            <i class="fs-4 bi-house"></i> <button class="btn btn-warning ms-1 d-none d-sm-inline text-white" data-bs-target="#inoroutrub" data-bs-toggle="modal">Ввод\Вывод средств</button>
+
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" class="nav-link align-middle px-0">
                             <i class="fs-4 bi-house"></i> <button data-bs-toggle="modal" data-bs-target="#buy" class="btn btn-primary ms-1 d-none d-sm-inline text-white">Купить валюту</button>
                         </a>
@@ -142,6 +148,38 @@
 </div>
 
 
+<div aria-hidden="true" aria-labelledby="inoroutrubModalLabel" class="modal fade" id="inoroutrub" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="inoroutrubModalLabel">Покупка валюты</h1>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+            <form action="/balance" id="input-form" method="post">
+
+                <div class="mb-4 text-b" id="rubbil">Валютный счёт в рублях</div>
+
+
+                <select class="valuechange form-select mb-4 " id="operationrub" name="balance_operation">
+                    <option selected>Выберите операцию</option>
+                     <option value="insert">Пополнение</option>
+                     <option value="withdraw">Вывод </option>
+                </select>
+
+                <input class="valuechange form-control mb-4" id="inputCount2" name="number" placeholder="Количество" required type="number">
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
+        <button class="btn btn-primary" form="input-form" type="submit">Вперёд!</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 

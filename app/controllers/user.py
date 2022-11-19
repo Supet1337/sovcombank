@@ -5,7 +5,7 @@ from app.main import app, templates
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import Request, Cookie
 
-from app.utility import CurrencyDescriptionDict, check_auth, JAVA_BACK_URL, get_currency
+from app.utility import CurrencyDescriptionDict, check_auth, JAVA_BACK_URL
 
 
 @app.get("/user", response_class=HTMLResponse)

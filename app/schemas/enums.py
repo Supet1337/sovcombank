@@ -31,3 +31,8 @@ class CurrencyEnum(str, Enum):
 class OperationEnum(str, Enum):
     buy = "buy"
     sell = "sell"
+
+
+class BalanceOperationEnum(str, Enum):
+    insert = "insert"
+    withdraw = "withdraw"

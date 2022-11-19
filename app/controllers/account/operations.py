@@ -2,7 +2,7 @@ import httpx
 import starlette.status
 
 from app.main import app
-from app.schemas.enums import OperationEnum
+from app.schemas.enums import OperationEnum, BalanceOperationEnum
 from app.utility import JAVA_BACK_URL, check_auth, get_currency
 
 from fastapi import Request, Cookie, Form
@@ -25,9 +25,30 @@ async def make_deal(request: Request, vtauth: str | None = Cookie(default=None),
                            "sum": -number if operation == OperationEnum.buy else number
                        })
     if opres.status_code == 402:
-        return RedirectResponse("/402")
+        return RedirectResponse("/402", status_code=starlette.status.HTTP_302_FOUND)
     if opres.status_code == 200:
         return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
     else:
 
+        return RedirectResponse("/", status_code=starlette.status.HTTP_302_FOUND)
+
+
+@app.post("/balance")
+async def manipulate_balance(request: Request, vtauth: str | None = Cookie(default=None),
+                             balance_operation: BalanceOperationEnum = Form(default=BalanceOperationEnum.withdraw),
+                             number: int = Form()
+                             ):
+    errors = []
+    s_email = check_auth(vtauth)
+    if s_email is None: return RedirectResponse("/login?q=notauthorized", status_code=starlette.status.HTTP_302_FOUND)
+
+    opres = httpx.post(f"{JAVA_BACK_URL}/deal/balance?email={s_email}",
+                    json={
+                        "sum": number if balance_operation == BalanceOperationEnum.insert else -number
+                    })
+    if opres.status_code == 402:
+        return RedirectResponse("/402", status_code=starlette.status.HTTP_302_FOUND)
+    elif opres.status_code == 200:
+        return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
+    else:
         return RedirectResponse("/", status_code=starlette.status.HTTP_302_FOUND)
