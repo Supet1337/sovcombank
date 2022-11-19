@@ -24,7 +24,7 @@ async def account_page(request: Request, account_id: int, vtauth: str | None = C
     elif check.status_code == 200:
         account = AccountData(**check.json())
         # TODO: get data for charts through currency key
-        return templates.TemplateResponse("user/account.html",
+        return templates.TemplateResponse("user/user.html",
                                           {
                                               "request": request,
                                               "errors": errors,
@@ -32,9 +32,10 @@ async def account_page(request: Request, account_id: int, vtauth: str | None = C
                                           })
 
 
-@app.get("/account/create")
-async def create_account(request: Request):
+@app.post("/account/create")
+async def create_account(request: Request, ):
     errors = []
     # validate data
 
-    return RedirectResponse("/")
+    return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
+

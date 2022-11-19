@@ -1,7 +1,7 @@
 import starlette.status
 
 from app.main import app, templates
-from app.utility import hash_password, JAVA_BACK_URL, update_sessions
+from app.utility import hash_password, JAVA_BACK_URL, update_sessions, WRONG_PASSWORD, PASSWORDS_DONT_MATCH, USER_EXISTS
 
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import Request, Form
@@ -43,7 +43,7 @@ async def login(
         return templates.TemplateResponse("auth/login.html",
                                           {
                                               "request": request,
-                                              "errors": ["Неверная почта или пароль!"]
+                                              "errors": WRONG_PASSWORD
                                           })
     elif check.status_code == 200:
         # Записываем токен сессии в куки
@@ -72,7 +72,7 @@ async def register(
         return templates.TemplateResponse("auth/register.html",
                                           {
                                               "request": request,
-                                              "errors": ["Пароли не совпадают!"]
+                                              "errors": PASSWORDS_DONT_MATCH
                                           })
 
     hashed_password = hash_password(password)
@@ -87,7 +87,7 @@ async def register(
         return templates.TemplateResponse("auth/register.html",
                                           {
                                               "request": request,
-                                              "errors": ["Такой администратор уже существует!"]
+                                              "errors": USER_EXISTS
                                           })
     elif check.status_code == 200:
         response = RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)

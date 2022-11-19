@@ -1,19 +1,40 @@
+import httpx
+
 from app.main import app, templates
 
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi import Request, Cookie
 
-from app.utility import CurrencyDescriptionDict
+from app.utility import CurrencyDescriptionDict, check_auth, JAVA_BACK_URL, get_currency
 
 
 @app.get("/user", response_class=HTMLResponse)
 async def user(request: Request, vtauth: str | None = Cookie(default=None)):
-    if vtauth is None:
+    from app.main import sessions
+    if sessions.check_session(vtauth) is None:
         return RedirectResponse("/login?q=notauthorized")
+
+    email = check_auth(vtauth)
+    # TODO: Get all accounts from user
+    accounts: list = httpx.get(f"{JAVA_BACK_URL}/accounts/{email}").json()
+
+    week_currency = get_currency(days=7)
+    month_currency = get_currency(days=30)
+    t_year_currency = get_currency(days=365)
+    year_currency = [sum(t_year_currency[i:i+30])/30 for i in range(0, 360, 30)]
 
     return templates.TemplateResponse("user/user.html",
                                       {
                                           "request": request,
-                                          "currency_dict": CurrencyDescriptionDict
+                                          "is_authorized": True,
+                                          "currency_dict": CurrencyDescriptionDict,
+                                          "current_account": accounts[0],
+                                          "accounts": accounts,
+                                          "currencies": {
+                                              "week": week_currency[::-1],
+                                              "month": month_currency[::-1],
+                                              "year": year_currency[::-1]
+                                          }
+
                                       })
 
