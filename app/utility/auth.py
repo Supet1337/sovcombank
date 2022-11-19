@@ -8,6 +8,12 @@ from . import JAVA_BACK_URL
 from app.schemas import UserData
 
 
+def hash_password(password: str) -> str:
+    h = hashlib.new('sha256')
+    h.update(password.encode('UTF-8'))
+    return h.hexdigest()
+
+
 def gen_token(client_ip: str, email: str) -> str:
     """
     Generating token for validating session in cookies

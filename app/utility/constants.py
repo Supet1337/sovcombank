@@ -4,3 +4,4 @@ TEMPLATES_PATH = "app/templates"
 SECRET_KEY = 'd30355fff5e94dc32455406bc964db3ebf699ef0674e308c2a0ae5acad90eea9'
 
 JAVA_BACK_URL = "0.0.0.0:00"
+COOKIE_TOKEN_KEY = "vtauth"
