@@ -18,15 +18,11 @@
 * Расширение функционала до почасовых графиков и прогнозов курсов валют
 * Внедрение заявок на автоматическую покупку и продажу валюты
 ## Стек технологий 
-### [Python:](https://github.com/cepheus-team/sovcombank/tree/python) 
-* FastAPI
-* Jinja2 
-* Pandas
-* Statsmodels
-### [Java:](https://github.com/cepheus-team/sovcombank/tree/java-dev) 
-* Spring Boot
-* Hibernate
-* PostgreSQL
-### [Frontend:](https://github.com/cepheus-team/sovcombank/tree/front)
-* HTML
-* CSS etc.
+| [Python](https://github.com/cepheus-team/sovcombank/tree/python) | [Java](https://github.com/cepheus-team/sovcombank/tree/java-dev)           | [Frontend](https://github.com/cepheus-team/sovcombank/tree/front)  |
+| :------------- |:-------------| :-----|
+| FastAPI      | Spring Boot | HTML |
+| Jinja2      | Hibernate      |   CSS  |
+| Pandas | PostgreSQL      |   etc.  |
+| Statsmodels |       |     |
+ 
+
