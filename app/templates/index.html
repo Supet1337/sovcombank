@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .super-dollar-the-show{
+            margin-bottom: -49px; padding-bottom: 2.5rem; background: url("{{ url_for('static', path='img/dollar.png')}} "), linear-gradient(180deg, #EEECEC 0%, rgba(53, 168, 201, 0.71) 72.17%, rgba(0, 71, 255, 0) 184.76%) no-repeat; animation: gradient 8s ease infinite;
+    }
+</style>
+<section class="super-dollar-the-show" data-aos="fade-up" data-aos-duration="1500" style="">
+<div class="container" style="margin-bottom: 22%;">
+    <div style="text-align: center;">
+        <h1 class="display-2" data-aos="zoom-in-up" data-aos-duration="1500" style="color: #5DA6BB;">Денег много не бывает</h1>
+        <h1 class="display-6" data-aos="zoom-in-up" data-aos-duration="1500" style="color: #5DA6BB;" > Откройте валютный счёт уже сегодня</h1>
+    </div>
+</div>
+
+<div class="container-sm mt-5" style="">
+    <div class="row">
+        <div class="col mb-3" data-aos="fade-right" data-aos-duration="1500">
+            <div  class="card h-100 " style="background: rgba(177, 190, 191, 0.15);border-radius: 35px;">
+                <div class="card-body" style="text-align: center;">
+                    <i class="fa-solid fa-chart-line" style="font-size: 180px; color: #5DA6BB"></i>
+                </div>
+              <div align="center" class="card-body">
+                  <h1 class="display-6" style="color: #5DA6BB;">Персональная аналитика</h1>
+              </div>
+            </div>
+        </div>
+
+        <div class="col mb-3" data-aos="fade-up" data-aos-duration="1500">
+            <div class="card h-100 " style="background: rgba(177, 190, 191, 0.15);border-radius: 35px; ">
+                <div class="card-body" style="text-align: center;">
+                    <i class="fa-solid fa-hand-holding-dollar" style="font-size: 180px; color: #5DA6BB"></i>
+                </div>
+              <div align="center" class="card-body">
+                  <h1 class="display-6" style="color: #5DA6BB;">Без комиссии</h1>
+              </div>
+            </div>
+        </div>
+
+            <div class="col mb-3" data-aos="fade-left" data-aos-duration="1500">
+                <div class="card h-100" style="background: rgba(177, 190, 191, 0.15);border-radius: 35px;">
+                    <div class="card-body" style="text-align: center;">
+                        <i class="fa-solid fa-magnifying-glass-chart" style="font-size: 180px; color: #5DA6BB"></i>
+                    </div>
+                  <div align="center" class="card-body">
+                      <h1 class="display-6" style="color: #5DA6BB;">Актуальный курс</h1>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section style="background: linear-gradient(180deg, rgba(189,210,222,1) 0%, rgba(53,168,201,0.6096813725490196) 100%) no-repeat; padding-top: 2.5rem;padding-bottom: 2.5rem;">
+<div class="container-sm mt-5" style="text-align: center">
+    <h1 class="display-3 mb-5" data-aos="zoom-in-up" data-aos-duration="1500" style="color: white;">Преимущества платформы</h1>
+        <div class="card mb-5" data-aos="zoom-in-right" data-aos-duration="1500" style="background: linear-gradient(180deg, rgb(109 195 221 / 61%) 22%, rgba(255,255,255,1) 86%); border-radius: 16px;border: none;">
+          <div class="row g-0" style="padding-left: 1%; padding-right: 1%;">
+            <div class="col-md-6">
+              <img alt="Быстро" class="img-fluid rounded-start" src="{{ url_for('static', path='img/fast.png')}}">
+            </div>
+            <div class="col-md-6 my-auto">
+              <div class="card-body" data-aos="fade-left" data-aos-duration="1500">
+                <h5 class="display-6" style="color: white;font-size: 3.2rem;">Быстро</h5>
+                <h5 align="left" style="color: #61bbd3;font-weight: bold;">Наш сайт оперативно получает и передаёт вам актуальную информацию курса валют с проверенных источников </h5>
+            </div>
+          </div>
+        </div>
+    </div>
+
+        <div class="card mb-5" data-aos="zoom-in-left" data-aos-duration="1500" style="background: linear-gradient(180deg, rgb(109 195 221 / 61%) 22%, rgba(255,255,255,1) 86%); border-radius: 16px;border: none;">
+          <div class="row g-0" style="padding-left: 1%; padding-right: 1%;">
+            <div class="col-md-6 my-auto">
+              <div class="card-body" data-aos="fade-right" data-aos-duration="1500">
+                <h5 class="display-6" style="color: white;font-size: 3.2rem;">Доступно</h5>
+                <h5 align="left" style="color: #61bbd3;font-weight: bold;">Наш сайт доступен каждому! В любое время дня и ночи вы можете создать неограниченное количество счетов и пользоваться ими</h5>
+            </div>
+          </div>
+              <div class="col-md-6">
+              <img alt="Быстро" class="img-fluid rounded-start" src="{{ url_for('static', path='img/acess.png')}}">
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-5" data-aos="zoom-in-right" data-aos-duration="1500" style="background: linear-gradient(180deg, rgb(109 195 221 / 61%) 22%, rgba(255,255,255,1) 86%); border-radius: 16px;border: none;">
+              <div class="row g-0" style="padding-left: 1%; padding-right: 1%;">
+                <div class="col-md-6">
+                  <img alt="Быстро" class="img-fluid rounded-start" src="{{ url_for('static', path='img/comfort.png')}}">
+                </div>
+                <div class="col-md-6 my-auto">
+                  <div class="card-body" data-aos="fade-left" data-aos-duration="1500">
+                    <h5 class="display-6" style="color: white;font-size: 3.2rem;">Удобно</h5>
+                    <h5 align="left" style="color: #61bbd3;font-weight: bold;">Совершайте операции покупки и продажи валюты на разных счетах, пользуйтесь нашим прогнозированием курса валюты </h5>
+                </div>
+              </div>
+            </div>
+    </div>
+
+</div>
+
+</section>
+
+<section style="padding-top: 2.5rem;padding-bottom: 2.5rem;">
+    <div class="container-sm mt-5" style="text-align: center">
+        <h1 align="center" class="display-3 mb-5" data-aos="zoom-in-up" data-aos-duration="1500" style="color: #5DA6BB;">Наша команда</h1>
+    <div class="card-group">
+  <div class="card" data-aos="flip-up" data-aos-duration="1500">
+    <img alt="Тимофей" class="card-img-top" src=" {{url_for('static', path='img/timajpg.jpg')}}" style="max-height: 19.9vh;object-fit: cover;">
+    <div class="card-body">
+      <h5 class="card-title">Тимофей Мальцев </h5>
+      <p class="card-text">Python backend</p>
+    </div>
+    <div class="card-footer">
+        <a href="t.me/KlenoviySirop"><i class="fa fa-telegram"> @KlenoviySirop</i></a>
+    </div>
+  </div>
+  <div class="card" data-aos="flip-down" data-aos-duration="1500">
+    <img alt="Дима" class="card-img-top" src=" {{url_for('static', path='img/dimajpg.jpg')}}" style="max-height: 19.9vh;object-fit: cover;">
+    <div class="card-body">
+      <h5 class="card-title">Дмитрий Денисенко</h5>
+      <p class="card-text">Java backend</p>
+    </div>
+    <div class="card-footer">
+        <a href="t.me/RickPick0"><i class="fa fa-telegram"> @RickPick0</i></a>
+    </div>
+  </div>
+  <div class="card" data-aos="flip-up" data-aos-duration="1500">
+    <img alt="Ваня" class="card-img-top" src="{{ url_for('static', path='img/papich.jpg') }}" style="max-height: 19.9vh;object-fit: cover;">
+    <div class="card-body">
+      <h5 class="card-title">Иван Красильников</h5>
+      <p class="card-text">Java backend</p>
+    </div>
+    <div class="card-footer">
+        <a href="t.me/kkrasilnikovv"><i class="fa fa-telegram"> @kkrasilnikovv</i></a>
+    </div>
+  </div>
+        <div class="card" data-aos="flip-down" data-aos-duration="1500">
+    <img alt="Петя" class="card-img-top" src=" {{ url_for('static',path='img/danya.jpg') }}  " style="max-height: 19.9vh;object-fit: cover;">
+    <div class="card-body">
+        <h5 class="card-title">Даниил Сомов</h5>
+      <p class="card-text">DS/ML</p>
+    </div>
+    <div class="card-footer">
+        <a href="t.me/ndnajdks"><i class="fa fa-telegram"> @ndnajdks</i></a>
+    </div>
+  </div>
+        <div class="card" data-aos="flip-up" data-aos-duration="1500">
+    <img alt="Даня" class="card-img-top" src="{{ url_for('static', path='/img/petya.jpg') }}" style="max-height: 19.9vh;object-fit: cover;">
+    <div class="card-body">
+        <h5 class="card-title">Пётр Воронцов</h5>
+      <p class="card-text">Frontend</p>
+    </div>
+    <div class="card-footer">
+        <a href="t.me/supet1337"><i class="fa fa-telegram"> @supet1337</i></a>
+    </div>
+  </div>
+</div>
+    </div>
+</section>
+
+
+<section style="background: linear-gradient(180deg, rgba(189,210,222,1) 0%, rgba(53,168,201,0.6096813725490196) 100%) no-repeat; padding-top: 2.5rem;padding-bottom: 2.5rem;">
+<div class="container-sm mt-5" style="text-align: center">
+    <h1 align="center" class="display-3 mb-5" data-aos="zoom-in-up" data-aos-duration="1500" style="color: white;">Блог</h1>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for post in posts %}
+      <div class="col" data-aos="fade-in" data-aos-duration="1500">
+        <div class="card">
+            <a href="user/{{post.author.id}}"><img alt="..." class="card-img-top" src="{{post.image}}" style="max-height: 396px;object-fit: cover;"></a>
+          <div class="card-body">
+            <h5 class="card-title">{{post.title}}</h5>
+              <a href="user/{{post.author.id}}"><h6></h6></a>
+            <p class="card-text">{{post.description}}</p>
+          </div>
+        </div>
+      </div>
+        {% endfor %}
+</section>
+
+        <script crossorigin="anonymous" src="https://kit.fontawesome.com/3dee05229a.js"></script>
+        <script crossorigin="anonymous" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script><script>AOS.init();</script>
+
+{% endblock %}

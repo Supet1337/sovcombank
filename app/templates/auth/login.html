@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="h-100 bg-dark">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card card-registration my-4">
+          <div class="row g-0">
+
+            <div class="col-xl-6 d-none d-xl-block background-card card-register">
+            </div>
+            <div class="col-xl-6 text-center">
+              <div class="card-body p-md-5 text-black">
+                <h3 class="mb-5 text-uppercase">Вход</h3>
+
+                <form method="POST" class="form-outline mb-4">
+                    <input type="email" name="email" required class="form-control mb-4" id="inputEmail" placeholder="Email">
+                    <input type="password" name="password" required class="form-control mb-4" id="inputPassword1" placeholder="Пароль">
+                    <button type="submit" style="background-color: #00E797; width: 100%; color: white;" class="btn btn-lg brd-n">Вход</button>
+                </form>
+
+                <a href="/register">У вас ещё нет аккаунта?</a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

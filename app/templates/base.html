@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    {% if title %}
+        <title>{{title}} - CepheusTrade</title>
+    {% else %}
+        <title>CepheusTrade</title>
+    {% endif %}
+    <link href="{{ url_for('static', path='css/main.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', path='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="{{ url_for('static', path='img/cash.png') }}" rel="icon" >
+</head>
+<body style="height: 100%">
+
+{% include "header.html" %}
+{% if errors %}
+    {% for error in errors %}
+    <div class="alert alert-danger" role="alert">
+      {{ error }}
+    </div>
+    {% endfor %}
+{% endif%}
+<main>
+    {% block content %} {% endblock %}
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script crossorigin="anonymous" src="https://kit.fontawesome.com/3dee05229a.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>AOS.init();</script>
+</body>
+
+</html>

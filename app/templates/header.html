@@ -1,0 +1,29 @@
+{% block navbar %}
+<nav class="navbar  navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand text-b" href="/">Cepheus Trade</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <marquee>
+                    <a aria-current="page" class="nav-link active" href="#"> <span id="usd-circle">USD 60.37</span> <span style="color: green"> ↑ </span> <span id="eur-circle">EUR 62.45</span> <span style="color: red"> ↓ </span>
+                    CHF 63.48 <span style="color: red"> ↓ </span> JPY 0.43 <span style="color: red"> ↓ </span> GBP 71.11 <span style="color: red"> ↓ </span> CNY 8.47 <span style="color: green"> ↑ </span>
+                    </a>
+                </marquee>
+
+      <div class="d-flex">
+          {% if is_authorized or is_admin %}
+          <a href="/logout"><button type="button" class="btn btn-outline-danger me-3">Выход</button></a>
+          {% if not is_admin %}
+          <a href="/user" style="aspect-ratio: 1/1"><img class="avatar" style="aspect-ratio: 1/1" src="https://www.interfax.ru/ftproot/photos/photostory/2021/06/11/week4_1100.jpg"></a>
+          {% endif %}
+          {% else %}
+          <a href="/login"><button type="button" class="btn btn-primary me-3">Авторизация</button></a>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+{% endblock %}

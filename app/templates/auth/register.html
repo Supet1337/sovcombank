@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+<style>
+  .card-register {
+    background-image: "{{ url_for('static', path='img/login.jpg') }}";
+  }
+
+
+</style>
+
+{% block content %}
+<section class="h-100 bg-dark">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card card-registration my-4">
+          <div class="row g-0">
+            <div class="col-xl-6 d-none d-xl-block background-card card-register">
+            </div>
+            <div class="col-xl-6 text-center">
+              <div class="card-body p-md-5 text-black">
+                <h3 class="mb-5 text-uppercase">Регистрация</h3>
+                <form method="POST" class="form-outline mb-4">
+                <div class="row mb-4">
+                  <div class="col-md-6">
+                    <div class="form-outline">
+                      <input type="text" name="first_name" required class="form-control" id="firstName" placeholder="Имя">
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-outline">
+                      <input type="text" name="second_name" required class="form-control" id="lastName" placeholder="Фамилия">
+                    </div>
+                  </div>
+                </div>
+
+
+                  <input type="email" name="email" required class="form-control mb-4" id="inputEmail" placeholder="Email">
+                  <input type="password" name="password" required class="form-control mb-4" id="inputPassword1" placeholder="Пароль">
+                  <input type="password"  name="confirm_password" required class="form-control mb-4" id="inputPassword2" placeholder="Повторите пароль">
+
+                  <button type="submit" style="background-color: #00E797; width: 100%; color: white;" class="btn btn-lg brd-n">Зарегистрироваться</button>
+
+                </form>
+
+                <a href="/login">Уже есть аккаунт?</a>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

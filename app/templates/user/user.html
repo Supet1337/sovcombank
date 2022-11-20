@@ -1,0 +1,339 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    body {
+        background: #35A8C9;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" id="sidebar">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                    <span class="fs-5 d-none d-sm-inline">Меню</span>
+                </a>
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item" data-aos="zoom-in-right" data-aos-duration="1500">
+                        <a href="/" class="nav-link align-middle px-0">
+                            <span class="ms-1 d-none d-sm-inline text-white">На главную</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link align-middle px-0" href="#">
+                            <button class="btn btn-warning ms-1 d-none d-sm-inline text-white" data-bs-target="#inoroutrub" data-bs-toggle="modal">Ввод\Вывод средств</button>
+
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                             <button class="btn btn-primary ms-1 d-none d-sm-inline text-white" data-bs-target="#buy" data-bs-toggle="modal">Купить валюту</button>
+                        </a>
+                    </li>
+
+                     <li class="nav-item">
+                        <a href="#" class="nav-link align-middle px-0">
+                            <button class="btn  ms-1 d-none d-sm-inline text-white" data-bs-target="#newBill" data-bs-toggle="modal" style="background-color: #00E797; color: white;" type="submit">Открыть новый счёт</button>
+                        </a>
+                    </li>
+
+                    <li class="nav-item" data-aos="zoom-in-right" data-aos-duration="1500">
+                        <a  class="nav-link align-middle px-0 text-white text-b">
+                            Прогноз на сегодня
+                            <form action="/changepredict" id="prognoz-form" method="post">
+                                <select aria-label="Default select example" class="valuechange form-select " id="prognoz-val" name="predict_currency" onchange="this.form.submit();">
+                                     <option selected>Прогноз на {{current_account.currency}}</option>
+                                     {% for key, description in currency_dict.items() %}
+                                     <option value="{{ key }}">{{ description }}</option>
+                                     {% endfor %}
+                                </select>
+                            </form>
+                            {{ prediction }}
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="col py-3">
+
+            <div class="dropdown dropend mb-4">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Выберите валютный счёт
+              </button>
+
+              <ul class="dropdown-menu">
+                  {% for account in accounts %}
+                <li>
+                    <div onclick="choosebill(this.innerHTML)" class="dropdown-item">
+                        <a href="/account/{{account.id}}">Валютный счёт #{{ account.id }} ({{ account.currency }})</a>
+                    </div>
+                </li>
+                  {% endfor %}
+              </ul>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-warning shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        Валютный счёт</div>
+                                    <div id="bill" class="h5 mb-0 font-weight-bold text-gray-800">Валютный счёт #{{ current_account.id }} ({{current_account.currency}})</div>
+                                    <a style="color: #35A8C9 !important;" class="text-b" href="/operations/acc{{ current_account.id }}" >История операций</a>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-money-bill fa-2x text-gray-300" style="color: #198754;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                        Доход</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">RUB {{ profit or 0 }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-arrow-trend-up fa-2x text-gray-300" style="color: #198754;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4" data-aos="zoom-in-up" data-aos-duration="1500">
+                    <div class="card border-left-success shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                        Траты</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">RUB {{ deficit or 0 }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-arrow-trend-down fa-2x text-gray-300" style="color: #dc3545;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-4" data-aos="zoom-in-up" data-aos-duration="1500">
+                    <div class="card border-left-info shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Баланс
+                                    </div>
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-auto">
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ current_account.balance }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fa-solid fa-piggy-bank fa-2x text-gray-300" style="color: #dc354585;"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-4" data-aos="zoom-in-left" data-aos-duration="1500">
+                <div class="card-body">
+                     <div>
+                        <canvas id="currencyChart"></canvas>
+                         <button onclick="setIntervalweek()" class="btn" >Неделя</button>
+                         <button onclick="setIntervalmonth()" class="btn" >Месяц</button>
+                         <button onclick="setIntervalyear()" class="btn" >Год</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div aria-hidden="true" aria-labelledby="inoroutrubModalLabel" class="modal fade" id="inoroutrub" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="inoroutrubModalLabel">Покупка валюты</h1>
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+            <form action="/balance" id="input-form" method="post">
+
+                <div class="mb-4 text-b" id="rubbil">Валютный счёт в рублях</div>
+
+
+                <select class="valuechange form-select mb-4 " id="operationrub" name="balance_operation">
+                    <option selected>Выберите операцию</option>
+                     <option value="insert">Пополнение</option>
+                     <option value="withdraw">Вывод </option>
+                </select>
+
+                <input class="valuechange form-control mb-4" id="inputCount2" name="number" placeholder="Количество" required type="number">
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Закрыть</button>
+        <button class="btn btn-primary" form="input-form" type="submit">Вперёд!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="newBill" tabindex="-1" aria-labelledby="newBillModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newBillModalLabel">Открытие счёта</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+            <form action="/account/create" id="new-bill-form" method="post">
+                <select name="new_bill_val" id="new-bill-val" class="valuechange form-select " aria-label="Default select example">
+                     <option selected>Выберите валюту счёта</option>
+                     {% for key, description in currency_dict.items() %}
+                     <option value="{{ key }}">{{ description }}</option>
+                     {% endfor %}
+                </select>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button type="submit" form="new-bill-form" class="btn btn-primary">Создать</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="buy" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Покупка валюты</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+
+            <form action="/deal" id="buy-form" method="post">
+
+                <div id="billbye" class="mb-4 text-b">Валютный счёт #{{ current_account.id }} ({{ current_account.currency }})</div>
+
+                <select id="operation" name="operation" class="valuechange form-select mb-4 ">
+                    <option selected>Выберите операцию</option>
+                     <option value="buy">Покупка</option>
+                     <option value="sell">Продажа </option>
+                </select>
+                <input hidden name="account_id" value="{{current_account.id}}">
+                <input hidden name="currency_key" value="{{ current_account.currency }}">
+                <input name="number" type="number" required class="valuechange form-control mb-4" id="inputCount1" placeholder="Количество">
+                <div class="result text-b" id="selection"></div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button type="submit" form="buy-form" class="btn btn-primary">Купить!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+var selectElement = document.getElementById("select-val");
+var countVal = document.getElementById("inputCount1");
+var operation = document.getElementById("operation");
+
+countVal.addEventListener('change', (event) => {
+  const result = document.querySelector('.result');
+  result.textContent = `=  ${operation.value} ${countVal.value} ${selectElement.value}`;
+});
+
+operation.addEventListener('change', (event) => {
+  const result = document.querySelector('.result');
+  result.textContent = `=  ${operation.value} ${countVal.value} ${selectElement.value}`;
+});
+
+
+
+const ctx = document.getElementById('currencyChart');
+  var currencyChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+      datasets: [{
+        label: "Курс",
+        data: [],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+    function setIntervalmonth(){
+        currencyChart.data.labels = [];
+        currencyChart.data.datasets[0].data = {{ currencies.month }};
+        for (var i = 0; i < 32; i++) {
+            currencyChart.data.labels.push(i);
+            currencyChart.update();
+        }
+    }
+    function setIntervalweek(){
+        currencyChart.data.labels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+        currencyChart.data.datasets[0].data = {{ currencies.week }};
+        for (var i = 0; i < 8; i++) {
+            currencyChart.update();
+        }
+    }
+
+    function setIntervalyear(){
+        currencyChart.data.labels = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Нояб', 'Дек'];
+        currencyChart.data.datasets[0].data = {{ currencies.year }};
+        for (var i = 0; i < 13; i++) {
+            currencyChart.update();
+        }
+    }
+
+
+function choosebill(el){
+    var billval = document.getElementById("bill");
+    var billvalbye = document.getElementById("billbye");
+    billval.innerHTML = el;
+    billvalbye.innerHTML = el;
+    myChart.data.datasets[0].label = el;
+    myChart.update();
+}
+    </script>
+{% endblock %}
