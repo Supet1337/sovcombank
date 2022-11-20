@@ -41,8 +41,8 @@
                         <a  class="nav-link align-middle px-0 text-white text-b">
                             Прогноз на сегодня
                             <form action="/changepredict" id="prognoz-form" method="post">
-                                <select aria-label="Default select example" class="valuechange form-select " id="prognoz-val" name="predict_currency">
-                                     <option selected>Прогноз на USD</option>
+                                <select aria-label="Default select example" class="valuechange form-select " id="prognoz-val" name="predict_currency" onchange="this.form.submit();">
+                                     <option selected>Прогноз на {{current_account.currency}}</option>
                                      {% for key, description in currency_dict.items() %}
                                      <option value="{{ key }}">{{ description }}</option>
                                      {% endfor %}

@@ -163,13 +163,14 @@
 <div class="container-sm mt-5" style="text-align: center">
     <h1 align="center" class="display-3 mb-5" data-aos="zoom-in-up" data-aos-duration="1500" style="color: white;">Блог</h1>
     <div class="row row-cols-1 row-cols-md-2 g-4">
-        {% for blog in blogs %}
+        {% for post in posts %}
       <div class="col" data-aos="fade-in" data-aos-duration="1500">
         <div class="card">
-            <a href="{{blog.href}}"><img alt="..." class="card-img-top" src="https://static-cse.canva.com/blob/847064/29.jpg" style="max-height: 396px;object-fit: cover;"></a>
+            <a href="user/{{post.author.id}}"><img alt="..." class="card-img-top" src="{{post.image}}" style="max-height: 396px;object-fit: cover;"></a>
           <div class="card-body">
-            <h5 class="card-title">{{blog.name}}</h5>
-            <p class="card-text">{{blog.desc}}This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <h5 class="card-title">{{post.title}}</h5>
+              <a href="user/{{post.author.id}}"><h6></h6></a>
+            <p class="card-text">{{post.description}}</p>
           </div>
         </div>
       </div>
