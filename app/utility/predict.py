@@ -13,8 +13,8 @@ def forecast(start_date: str, end_date: str, currency: str):
     :param currency: Currency key for
     :return:
     """
-    base = 'RUB'
-    symbols = currency
+    base = currency
+    symbols = "RUB"
 
     url = f'https://api.apilayer.com/fixer/timeseries?start_date={start_date}&end_date={end_date}&base={base}&symbols={symbols}'
     payload = {}

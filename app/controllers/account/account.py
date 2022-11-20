@@ -42,3 +42,9 @@ async def create_account(request: Request, vtauth: str | None = Cookie(default=N
     })
     if check.status_code == 200: return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
 
+
+@app.post("/changepredict")
+async def change_prediction(request: Request,
+                            predict_currency: CurrencyEnum = Form(default=CurrencyEnum.Usd)):
+
+    return RedirectResponse(f"/user?pc={predict_currency}", status_code=starlette.status.HTTP_302_FOUND)

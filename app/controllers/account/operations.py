@@ -43,9 +43,9 @@ async def manipulate_balance(request: Request, vtauth: str | None = Cookie(defau
     if s_email is None: return RedirectResponse("/login?q=notauthorized", status_code=starlette.status.HTTP_302_FOUND)
 
     opres = httpx.post(f"{JAVA_BACK_URL}/deal/balance?email={s_email}",
-                    json={
-                        "sum": number if balance_operation == BalanceOperationEnum.insert else -number
-                    })
+                       json={
+                           "sum": number if balance_operation == BalanceOperationEnum.insert else -number
+                       })
     if opres.status_code == 200:
         return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
     else:
@@ -64,7 +64,9 @@ async def history_of_operations(request: Request, account_id: int,
 
     if req.status_code == 200:
         return templates.TemplateResponse("user/operation_history.html", {
-            {"request": request,
-             "operations": req.json()}
+            "request": request,
+            "is_authorized": True,
+            "operations": req.json()
         })
-
+    else:
+        return RedirectResponse(f"/{req.status_code}", status_code=starlette.status.HTTP_302_FOUND)

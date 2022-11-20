@@ -8,32 +8,47 @@
 </style>
 <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" id="sidebar">
             <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="#" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline">Меню</span>
                 </a>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                    <li class="nav-item">
+                    <li class="nav-item" data-aos="zoom-in-right" data-aos-duration="1500">
                         <a href="/" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-white">На главную</span>
+                            <span class="ms-1 d-none d-sm-inline text-white">На главную</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link align-middle px-0" href="#">
-                            <i class="fs-4 bi-house"></i> <button class="btn btn-warning ms-1 d-none d-sm-inline text-white" data-bs-target="#inoroutrub" data-bs-toggle="modal">Ввод\Вывод средств</button>
+                            <button class="btn btn-warning ms-1 d-none d-sm-inline text-white" data-bs-target="#inoroutrub" data-bs-toggle="modal">Ввод\Вывод средств</button>
 
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <button data-bs-toggle="modal" data-bs-target="#buy" class="btn btn-primary ms-1 d-none d-sm-inline text-white">Купить валюту</button>
+                             <button class="btn btn-primary ms-1 d-none d-sm-inline text-white" data-bs-target="#buy" data-bs-toggle="modal">Купить валюту</button>
                         </a>
                     </li>
 
                      <li class="nav-item">
                         <a href="#" class="nav-link align-middle px-0">
-                            <i class="fs-4 bi-house"></i> <button data-bs-toggle="modal" data-bs-target="#newBill" type="submit" style="background-color: #00E797; color: white;" class="btn  ms-1 d-none d-sm-inline text-white">Открыть новый счёт</button>
+                            <button class="btn  ms-1 d-none d-sm-inline text-white" data-bs-target="#newBill" data-bs-toggle="modal" style="background-color: #00E797; color: white;" type="submit">Открыть новый счёт</button>
+                        </a>
+                    </li>
+
+                    <li class="nav-item" data-aos="zoom-in-right" data-aos-duration="1500">
+                        <a  class="nav-link align-middle px-0 text-white text-b">
+                            Прогноз на сегодня
+                            <form action="/changepredict" id="prognoz-form" method="post">
+                                <select aria-label="Default select example" class="valuechange form-select " id="prognoz-val" name="predict_currency">
+                                     <option selected>Прогноз на USD</option>
+                                     {% for key, description in currency_dict.items() %}
+                                     <option value="{{ key }}">{{ description }}</option>
+                                     {% endfor %}
+                                </select>
+                            </form>
+                            {{ prediction }}
                         </a>
                     </li>
 
@@ -71,7 +86,7 @@
                                     <a style="color: #35A8C9 !important;" class="text-b" href="/operations/acc{{ current_account.id }}" >История операций</a>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                    <i class="fa-solid fa-money-bill fa-2x text-gray-300" style="color: #198754;"></i>
                                 </div>
                             </div>
                         </div>
@@ -87,14 +102,14 @@
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">RUB {{ profit or 0 }}</div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                    <i class="fa-solid fa-arrow-trend-up fa-2x text-gray-300" style="color: #198754;"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6 mb-4">
+                <div class="col-xl-3 col-md-6 mb-4" data-aos="zoom-in-up" data-aos-duration="1500">
                     <div class="card border-left-success shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -104,14 +119,14 @@
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">RUB {{ deficit or 0 }}</div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                    <i class="fa-solid fa-arrow-trend-down fa-2x text-gray-300" style="color: #dc3545;"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-xl-3 col-md-6 mb-4">
+                <div class="col-xl-3 col-md-6 mb-4" data-aos="zoom-in-up" data-aos-duration="1500">
                     <div class="card border-left-info shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -125,7 +140,7 @@
                                     </div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                    <i class="fa-solid fa-piggy-bank fa-2x text-gray-300" style="color: #dc354585;"></i>
                                 </div>
                             </div>
                         </div>
@@ -133,10 +148,10 @@
                 </div>
             </div>
 
-            <div class="card shadow mb-4">
+            <div class="card shadow mb-4" data-aos="zoom-in-left" data-aos-duration="1500">
                 <div class="card-body">
                      <div>
-                        <canvas id="myChart"></canvas>
+                        <canvas id="currencyChart"></canvas>
                          <button onclick="setIntervalweek()" class="btn" >Неделя</button>
                          <button onclick="setIntervalmonth()" class="btn" >Месяц</button>
                          <button onclick="setIntervalyear()" class="btn" >Год</button>
@@ -248,18 +263,12 @@
 </div>
 
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 
 var selectElement = document.getElementById("select-val");
 var countVal = document.getElementById("inputCount1");
 var operation = document.getElementById("operation");
-
-selectElement.addEventListener('change', (event) => {
-  const result = document.querySelector('.result');
-  result.textContent = `=  ${operation.value} ${countVal.value} ${selectElement.value}`;
-});
 
 countVal.addEventListener('change', (event) => {
   const result = document.querySelector('.result');
@@ -273,9 +282,8 @@ operation.addEventListener('change', (event) => {
 
 
 
-const ctx = document.getElementById('myChart');
-
-  var myChart = new Chart(ctx, {
+const ctx = document.getElementById('currencyChart');
+  var currencyChart = new Chart(ctx, {
     type: 'line',
     data: {
       labels: ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
@@ -294,28 +302,27 @@ const ctx = document.getElementById('myChart');
     }
   });
 
-
     function setIntervalmonth(){
-        myChart.data.labels = [];
-        myChart.data.datasets[0].data = {{ currencies.month }};
+        currencyChart.data.labels = [];
+        currencyChart.data.datasets[0].data = {{ currencies.month }};
         for (var i = 0; i < 32; i++) {
-            myChart.data.labels.push(i);
-            myChart.update();
+            currencyChart.data.labels.push(i);
+            currencyChart.update();
         }
     }
     function setIntervalweek(){
-        myChart.data.labels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
-        myChart.data.datasets[0].data = {{ currencies.week }};
+        currencyChart.data.labels = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+        currencyChart.data.datasets[0].data = {{ currencies.week }};
         for (var i = 0; i < 8; i++) {
-            myChart.update();
+            currencyChart.update();
         }
     }
 
     function setIntervalyear(){
-        myChart.data.labels = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Нояб', 'Дек'];
-        myChart.data.datasets[0].data = {{ currencies.year }};
+        currencyChart.data.labels = ['Янв', 'Фев', 'Март', 'Апр', 'Май', 'Июнь', 'Июль', 'Авг', 'Сен', 'Окт', 'Нояб', 'Дек'];
+        currencyChart.data.datasets[0].data = {{ currencies.year }};
         for (var i = 0; i < 13; i++) {
-            myChart.update();
+            currencyChart.update();
         }
     }
 

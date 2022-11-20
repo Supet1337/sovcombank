@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap');
 
 html{
     height: 100%;
@@ -97,3 +97,39 @@ a:hover, a:focus {
   padding:8px;
   color:#ccc;
 }
+
+.postimg{
+    max-width: fit-content;
+    min-height: 40vh;
+}
+
+.imgcover{
+    background-position: center center;
+    background-size: cover;
+}
+
+
+
+@media (max-width: 576px) {
+    #sidebar{
+        display: none;
+    }
+    #upmenu{
+        display: block !important;
+    }
+
+}
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+
