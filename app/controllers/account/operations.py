@@ -1,12 +1,12 @@
 import httpx
 import starlette.status
 
-from app.main import app
+from app.main import app, templates
 from app.schemas.enums import OperationEnum, BalanceOperationEnum
 from app.utility import JAVA_BACK_URL, check_auth, get_currency
 
 from fastapi import Request, Cookie, Form
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 
 
 @app.post("/deal")
@@ -46,9 +46,25 @@ async def manipulate_balance(request: Request, vtauth: str | None = Cookie(defau
                     json={
                         "sum": number if balance_operation == BalanceOperationEnum.insert else -number
                     })
-    if opres.status_code == 402:
-        return RedirectResponse("/402", status_code=starlette.status.HTTP_302_FOUND)
-    elif opres.status_code == 200:
+    if opres.status_code == 200:
         return RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)
     else:
-        return RedirectResponse("/", status_code=starlette.status.HTTP_302_FOUND)
+        return RedirectResponse(f"/{opres.status_code}", status_code=starlette.status.HTTP_302_FOUND)
+
+
+@app.get("/operations/acc{account_id}", response_class=HTMLResponse)
+async def history_of_operations(request: Request, account_id: int,
+                                vtauth: str | None = Cookie(default=None),
+                                ):
+    errors = []
+    s_email = check_auth(vtauth)
+    if s_email is None: return RedirectResponse("/login?q=notauthorized", status_code=starlette.status.HTTP_302_FOUND)
+
+    req = httpx.get(f"{JAVA_BACK_URL}/deal?accountId={account_id}&email={s_email}")
+
+    if req.status_code == 200:
+        return templates.TemplateResponse("user/operation_history.html", {
+            {"request": request,
+             "operations": req.json()}
+        })
+

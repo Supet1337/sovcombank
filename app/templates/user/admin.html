@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-2" style="text-align: center;">Панель администрирования</h1>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+    {% for user in users %}
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingOne">
+      <button aria-controls="flush-collapseOne" aria-expanded="false" class="accordion-button collapsed" data-bs-target="#flush-collapseOne" data-bs-toggle="collapse" type="button">
+          {{ user.email }}
+      </button>
+    </h2>
+    <div aria-labelledby="flush-headingOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample" id="flush-collapseOne">
+      <div class="accordion-body">
+            <div class="row">
+              <div class="col-6" style="font-style: italic;">
+                  {{ user.name }} {{ user.dateOfRegister }}
+              </div>
+              <div class="col-6" style="text-align: end;">
+                  <form action="/admin/approve" method="post">
+                    <input hidden name="email" value="{{ user.email }}">
+                    <button class="btn btn-success" type="submit">Подтвердить</button>
+                  </form>
+                  <form action="/admin/ban" method="post">
+                    <input hidden name="email" value="{{ user.email }}">
+                    <button class="btn btn-danger" type="submit">Заблокировать</button>
+                  </form>
+              </div>
+          </div>
+     </div>
+
+    </div>
+  </div>
+        {% endfor %}
+
+</div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end">
+        <li class="page-item disabled">
+          <a class="page-link">Назад</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Вперёд</a>
+        </li>
+      </ul>
+    </nav>
+</div>
+
+{% endblock %}

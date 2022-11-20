@@ -43,7 +43,7 @@ async def login(
         return templates.TemplateResponse("auth/login.html",
                                           {
                                               "request": request,
-                                              "errors": WRONG_PASSWORD
+                                              "errors": [WRONG_PASSWORD]
                                           })
     elif check.status_code == 200:
         # Записываем токен сессии в куки
@@ -72,7 +72,7 @@ async def register(
         return templates.TemplateResponse("auth/register.html",
                                           {
                                               "request": request,
-                                              "errors": PASSWORDS_DONT_MATCH
+                                              "errors": [PASSWORDS_DONT_MATCH]
                                           })
 
     hashed_password = hash_password(password)
@@ -87,7 +87,7 @@ async def register(
         return templates.TemplateResponse("auth/register.html",
                                           {
                                               "request": request,
-                                              "errors": USER_EXISTS
+                                              "errors": [USER_EXISTS]
                                           })
     elif check.status_code == 200:
         response = RedirectResponse("/user", status_code=starlette.status.HTTP_302_FOUND)

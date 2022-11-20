@@ -61,6 +61,12 @@ def check_auth(cookie_token: str | None) -> str | None:
         return None
 
 
+def get_session(cookie_token: str | None) -> dict | None:
+    from app.main import sessions
+    if cookie_token is not None:
+        return sessions.check_session(cookie_token)
+
+
 def are_null_strings(*args: list[str]) -> bool:
     for string in args:
         if string == "" or string is None:

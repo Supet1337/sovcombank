@@ -31,13 +31,14 @@ async def admin_login(
         ):
 
     errors = []
+    if email == "" or password == "": errors.append(EMPTY_FORMS_MESSAGE)
+
     hashed_password = hash_password(password)
     check = httpx.post(JAVA_BACK_URL + "/admins/login", json={
         "email": email,
         "password": hashed_password
     })
 
-    if email == "" or password == "": errors.append(EMPTY_FORMS_MESSAGE)
     if check.status_code == 404: errors.append(WRONG_PASSWORD)
 
     if len(errors):
@@ -48,11 +49,11 @@ async def admin_login(
                                           })
     elif check.status_code == 200:
         response = RedirectResponse("/admin", status_code=starlette.status.HTTP_302_FOUND)
-        response.set_cookie(**update_sessions(request, email))
+        response.set_cookie(**update_sessions(request, email, is_admin=True))
         return response
 
 
-@app.get("/register", response_class=HTMLResponse)
+@app.get("/admin/register", response_class=HTMLResponse)
 async def admin_register(request: Request):
     return templates.TemplateResponse("auth/admin/register.html",
                                       {
@@ -60,10 +61,12 @@ async def admin_register(request: Request):
                                       })
 
 
-@app.post("/register")
+@app.post("/admin/register")
 async def admin_register(request: Request,
-                         name: str = Form(), email: str = Form(), password: str = Form(), confirm_password: str = Form(),
-                         code: str = Form()
+                         name: str = Form(), invite_code: str = Form(),
+                          email: str = Form(),
+                         password: str = Form(), confirm_password: str = Form(),
+
                          ):
     errors = []
     if not password == confirm_password: errors.append(PASSWORDS_DONT_MATCH)
@@ -74,7 +77,7 @@ async def admin_register(request: Request,
         "email": email,
         "name": name,
         "password": hashed_password,
-        "code": code
+        "code": invite_code
     })
 
     if check.status_code == 403: errors.append(ADMIN_KEY_NOT_FOUND)
@@ -87,5 +90,5 @@ async def admin_register(request: Request,
                                           })
     elif check.status_code == 200:
         response = RedirectResponse("/admin", status_code=starlette.status.HTTP_302_FOUND)
-        response.set_cookie(**update_sessions(request, email, True))
+        response.set_cookie(**update_sessions(request, email, is_admin=True))
         return response
